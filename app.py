@@ -30,10 +30,11 @@ from Resources.Store.Store import Store, Stores, StoreList, BusinessStoreList
 # Store
 from Resources.Item.Item import Item, Items, ItemList
 
+# Business
 from Resources.Business.Business import Business, Businesses, BusinessList
 
-# Transactio
-from Resources.Transaction.Transaction import Transaction, CreditScore, TransactionList, TransactionNumberTotal
+# Transaction
+from Resources.Transaction.Transaction import Transaction, CreditScore, TransactionList, TransactionNumberTotal, TotalTransactionAmount
 # Sparse is better than dense
 app = Flask(__name__)
 from db import db, mongo
@@ -64,6 +65,7 @@ api = Api(app)
 
 # Security
 jwt = JWTManager(app)  # , authenticate, identity
+
 
 # JWT Extended
 @jwt.user_claims_loader
@@ -173,6 +175,10 @@ api.add_resource(CreditScore, "/creditscore")
 api.add_resource(TransactionList, "/getAllTransactions")
 
 api.add_resource(TransactionNumberTotal, "/transactionnumbertotal")
+
+
+api.add_resource(TotalTransactionAmount, "/totaltransactionamount")
+
 
 if __name__ == "__main__":
     from db import db

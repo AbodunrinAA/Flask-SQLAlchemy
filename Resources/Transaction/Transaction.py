@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from flask_restful import Resource
-
+from Resources.External.HttpClient import HttpClient
 from Models.ItemModels import ItemModel
 from Models.StoreModels import StoreModel
 from db import mongo
@@ -26,6 +26,9 @@ class Transaction(Resource):
             transactionMongo = mongo.db.Transaction
             result = transactionMongo.insert_one(transaction)
 
+            # Government tax authority api call
+            data = {"order_id": result.inserted_id, "platform_code": "022", "order_amount": item.price}
+            HttpClient.fire_and_forget(data)
             if result:
                 return {'message': 'Transaction created successfully'}, 201  # Created
             return {'message': 'Transaction not created successfully'}, 500  # Server Error
@@ -75,25 +78,29 @@ class TransactionNumberTotal(Resource):
         # explicit is better than implicit, readability counts
         if response_data['today']:
             result = transactionMongo.find({"business_id": response_data['business_id'], "date":
-                str(datetime.now().date())}).count()
-            return {'Total Number of Transaction Today': result}
+                str(datetime.now().date())})
 
-        result = transactionMongo.find({"business_id": response_data['business_id']}).count()
+            return {'Total Number of Transaction Today': len(list(result))}
 
-        return {'Total Number of Transaction': result}
+        result = transactionMongo.find({"business_id": response_data['business_id']})
+
+        return {'Total Number of Transaction': len(list(result))}
 
 
 class TotalTransactionAmount(Resource):
 
-    def get(self):
-        response_data = creditScoreParser.parse_args()
+    def post(self):
+        response_data = transactionQueryParser.parse_args()
         transactionMongo = mongo.db.Transaction
 
         # explicit is better than implicit, readability counts
         if response_data['today']:
-            transactionMongo.aggregate([
-                { '$match': {'date': str(datetime.now().date()), "business_id": response_data['business_id']}},
-                { '$group': {"business_id": response_data['business_id'], 'total': {'$sum': '$amount'}}}
-            ])
+            result = transactionMongo.find({"business_id": response_data['business_id'], "date":
+                str(datetime.now().date())})
+            total = sum(float(t['amount']) for t in result)
+            return {'Total Amount of Transaction Today': total}
 
-        return 'Total Number of Transaction'
+        result = transactionMongo.find({"business_id": response_data['business_id']})
+        total = sum(float(t['amount']) for t in result)
+
+        return {'Total Amount of Transaction': total}
