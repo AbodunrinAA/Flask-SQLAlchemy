@@ -39,11 +39,11 @@ from Resources.Transaction.Transaction import Transaction, CreditScore, Transact
 app = Flask(__name__)
 from db import db, mongo
 
-app.config["MONGO_URI"] = "mongodb+srv://"+quote.quote_plus("abodunringm")+":flRiMk5abcjkEVJE@cluster0.nw1wm.azure.mongodb.net/Hadi?retryWrites=true&w=majority"
+app.config["MONGO_URI"] = "mongodb+srv://"+quote.quote_plus("username")+":password@cluster0.nw1wm.azure.mongodb.net/Hadi?retryWrites=true&w=majority"
 mongo.init_app(app)
 app.config[
     "SQLALCHEMY_DATABASE_URI"
-] = "postgresql://kwandle@kwandlepostgres:Ademola@1@kwandlepostgres.postgres.database.azure.com:5432/postgres"
+] = "postgresql://username:password@1@kwandlepostgres.postgres.database.azure.com:5432/postgres"
 app.config[
     "SQLALCHEMY_TRACK_MODIFICATIONS"
 ] = False  # toggled off FlaskSQLAlchemy modification
