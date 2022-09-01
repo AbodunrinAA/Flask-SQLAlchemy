@@ -90,7 +90,7 @@ class StoreList(Resource):
         """
         try:
             stores = StoreModels.getAllStores()
-            result_Json = [store.to_Json() for store in
+            result_Json = [store.to_JsonNoItems() for store in
                            stores]
             return result_Json
         except Exception as e:
@@ -104,7 +104,7 @@ class BusinessStoreList(Resource):
         """
         try:
             stores = StoreModels.get_Stores_By_Business_Id(business_id)
-            result_Json = [store.to_Json() for store in
+            result_Json = [store.to_JsonNoItems() for store in
                            stores]
             return result_Json
         except Exception as e:

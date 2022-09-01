@@ -1,8 +1,7 @@
-# Flask_Alchemy
+# This project used Flask_Alchemy
 
-### This package contains Flask Api with Sqlite storage
-### integrated together by SqlAlchemy
+### This package contains Flask Api with Postgres storage and Mongodb
+### Kindly note that we have decided to use pure python and it standard library for the development of this project
 
-#dbname='{your_database}' user='kwandle@kwandlepostgres' host='kwandlepostgres.postgres.database.azure.com' password='{your_password}' port='5432' sslmode='true'
-#postgresql://postgres:Opeyemi@1@localhost/ApplicationDb
-#jdbc:postgresql://kwandlepostgres.postgres.database.azure.com:5432/postgres
+
+

@@ -37,8 +37,8 @@ class ItemModel(db.Model):
             "id": self.id,
             "name": self.name,
             "price": self.price,
-            "Produce Date": self.produce_date,
-            "Expire Date": self.expire_date,
+            "Produce Date": str(self.produce_date),
+            "Expire Date": str(self.expire_date),
             "store": self.store.to_JsonNoItems(),
         }
 
