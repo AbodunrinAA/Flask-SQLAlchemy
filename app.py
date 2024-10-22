@@ -43,7 +43,7 @@ app.config["MONGO_URI"] = "mongodb+srv://"+quote.quote_plus("username")+":passwo
 mongo.init_app(app)
 app.config[
     "SQLALCHEMY_DATABASE_URI"
-] = "postgresql://username:password@1@kwandlepostgres.postgres.database.azure.com:5432/postgres"
+] = ""
 app.config[
     "SQLALCHEMY_TRACK_MODIFICATIONS"
 ] = False  # toggled off FlaskSQLAlchemy modification
